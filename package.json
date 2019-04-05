@@ -4,7 +4,8 @@
     "generate": "node generate.js"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "algolia-sitemap": "^2.1.1"
   },
   "engines": {
     "node": "10.x"

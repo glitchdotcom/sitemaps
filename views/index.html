@@ -6,10 +6,11 @@
   
   <body>
     <style>
-      body { font-family: 'Courier New', monospace; font-size: 14px; padding: 3px; }
+      body { font-family: 'Courier New', monospace; font-size: 14px; padding: 0 15px; line-height: 1.5; }
       pre, code { background: #eee; font-size: inherit; }
-      pre { padding: 10px; }
+      pre { white-space: pre-line; padding: 15px; max-width: 600px;}
       code { padding: 2px 5px; }
+      .comment { color: gray; }
     </style>
     
     <h1>
@@ -21,10 +22,10 @@
     </p>
     
     <pre>
-      // rebuild all the sitemaps (projects, users, teams, collections)
+      <span class="comment">// rebuild all the sitemaps (projects, users, teams, collections)</span>
       npm run generate
       
-      // rebuild the projects sitemap
+      <span class="comment">// rebuild the projects sitemap</span>
       npm run generate projects
     </pre>
   </body>

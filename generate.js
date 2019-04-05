@@ -22,9 +22,12 @@ const hitToParams = (res) => {
 
 // sitemaps must be <= 50k entries per file, and <= 50 MB
 // algolia-sitemap paginates automatically: sitemaps/sitemap.{n}.xml
-
 algoliaSitemap({
   algoliaConfig,
   outputFolder: 'sitemaps',
   hitToParams,
 });
+
+function generate() {
+  
+}

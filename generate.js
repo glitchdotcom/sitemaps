@@ -1,4 +1,4 @@
-const generate = require('algolia-sitemap');
+const algoliaSitemap = require('algolia-sitemap');
 const indices = require('./constants').INDICES;
 
 const algoliaConfig = {
@@ -7,15 +7,18 @@ const algoliaConfig = {
   indexName: indices.teams,
 };
 
-const hitToParams = (res, i) => {
-  console.log(i);
+const hitToParams = (res) => {
+  // const url = // `https://${lang}.yoursite.com/${lang}/detail/${objectID}`;
+  // const loc = url({ lang: 'en', objectID });
+  const lastmod = new Date().toISOString();
+  const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
 };
 
 // sitemaps must be <= 50k entries per file, and <= 50 MB
-// Algolia 
-generate({
+// algolia-sitemap paginates automatically: sitemaps/sitemap.{n}.xml
+
+algoliaSitemap({
   algoliaConfig,
   outputFolder: 'sitemaps',
   hitToParams,
 });
-  

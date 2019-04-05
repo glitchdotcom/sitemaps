@@ -20,14 +20,17 @@ const hitToParams = (res) => {
   };
 };
 
-// sitemaps must be <= 50k entries per file, and <= 50 MB
-// algolia-sitemap paginates automatically: sitemaps/sitemap.{n}.xml
-algoliaSitemap({
-  algoliaConfig,
-  outputFolder: 'sitemaps',
-  hitToParams,
-});
+const args = process.argv.slice(2);
+args.length ? generate(args) : generate();
 
-function generate() {
-  
+function generate(indices = ['projects', 'users', 'teams', 'collections']) {
+  for (let index of indices) {
+    // sitemaps must be <= 50k entries per file, and <= 50 MB
+    // algolia-sitemap paginates automatically: sitemaps/sitemap.{n}.xml
+    algoliaSitemap({
+      algoliaConfig,
+      outputFolder: `sitemaps/${index}`,
+      hitToParams,
+    });
+  }
 }

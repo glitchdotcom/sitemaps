@@ -2,7 +2,9 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('sitemaps'));
+// this project's disk storage was manually bumped to 1GB to accomodate large sitemaps
+// all large assets need to live in .data
+app.use(express.static('.data'));
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');

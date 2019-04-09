@@ -49,7 +49,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     // algolia-sitemap paginates automatically
     algoliaSitemap({
       algoliaConfig,
-      outputFolder: `sitemaps/${index}`,
+      outputFolder: `.data/${index}`,
       hitToParams,
     });
   }

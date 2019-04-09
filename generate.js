@@ -22,9 +22,6 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       case 'collections':
         locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;
         break;
-      default:
-        locTemplate = (objectUrl) => `${glitchDomain}/${objectUrl}`;
-        break;
     }
 
     const algoliaConfig = {
@@ -40,6 +37,10 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       const lastmod = new Date().toISOString();
       const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       
+      if (item.notSafeForKids || item.isPrivate) {
+        return null;
+      }
+
       return {
         loc,
         lastmod,

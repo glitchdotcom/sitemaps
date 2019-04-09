@@ -16,14 +16,15 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       case 'users':
         locTemplate = (user) => `${glitchDomain}/@${user.login}`;
         break;
-      /* TODO: these are being re-indexed soon
       case 'teams':
         locTemplate = (team) => `${glitchDomain}/@${team.login}`;
         break;
       case 'collections':
-        locTemplate = (team) => `${glitchDomain}/@${collection.fullUrl}`;
+        locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;
         break;
-      */
+      default:
+        locTemplate = (objectUrl) => `${glitchDomain}/${objectUrl}`;
+        break;
     }
 
     const algoliaConfig = {
@@ -45,7 +46,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     };
 
     // sitemaps must be <= 50k entries per file, and <= 50 MB
-    // algolia-sitemap paginates automatically: sitemaps/sitemap.{n}.xml
+    // algolia-sitemap paginates automatically
     algoliaSitemap({
       algoliaConfig,
       outputFolder: `sitemaps/${index}`,

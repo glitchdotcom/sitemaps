@@ -17,7 +17,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
         locTemplate = (user) => `${glitchDomain}/@${user.login}`;
         break;
       case 'teams':
-        locTemplate = (team) => `${glitchDomain}/@${team.login}`;
+        locTemplate = (team) => `test.com/@${team.url}`;
         break;
       case 'collections':
         locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;
@@ -37,6 +37,8 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       const loc = locTemplate(item);
       const lastmod = new Date().toISOString();
       const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
+      
+      // console.log(loc);
 
       return {
         loc,

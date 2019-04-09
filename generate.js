@@ -17,7 +17,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
         locTemplate = (user) => `${glitchDomain}/@${user.login}`;
         break;
       case 'teams':
-        locTemplate = (team) => `test.com/@${team.url}`;
+        locTemplate = (team) => `${glitchDomain}/@${team.url}`;
         break;
       case 'collections':
         locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;

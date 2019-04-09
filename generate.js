@@ -32,6 +32,8 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: indices[index],
     };
+    
+    const sitemapLoc = `${glitchDomain}/
 
     const hitToParams = (item) => {
       const loc = locTemplate(item);

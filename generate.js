@@ -1,10 +1,10 @@
 const algoliaSitemap = require('algolia-sitemap');
 const indices = require('./constants').INDICES;
 
+const glitchDomain = 'https://glitch.com';
+
 const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
-
-const glitchDomain = 'https://glitch.com';
 
 function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   let locTemplate;

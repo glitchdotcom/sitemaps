@@ -32,15 +32,14 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: indices[index],
     };
-        const hitToParams = (item) => {
+    
+   const hitToParams = (item) => {
       const loc = locTemplate(item);
       // TODO: use the actual lastmod date
       // Mads will add lastmod date to the indices within a week or two
       const lastmod = new Date().toISOString();
       const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       
-      // console.log(loc);
-
       return {
         loc,
         lastmod,
@@ -52,8 +51,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     // algolia-sitemap paginates automatically
     algoliaSitemap({
       algoliaConfig,
-
-      sitemapLoc: `${glitchDomain}/${index}`,      outputFolder: `.data/${index}`,
+      outputFolder: `..ata/${index}`,
       hitToParams,
     });
   }

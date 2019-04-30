@@ -1,15 +1,6 @@
 const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
-var ProgressBar = require('progress');
- 
-var bar = new ProgressBar(':bar', { total: 10 });
-var timer = setInterval(function () {
-  bar.tick();
-  if (bar.complete) {
-    console.log('\ncomplete\n');
-    clearInterval(timer);
-  }
-}, 100);
+const ora = require('ora'); 
 
 const indices = require('./constants').INDICES;
 
@@ -19,7 +10,9 @@ const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
 
 function generate(sections = ['projects', 'users', 'teams', 'collections']) {
-  console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}`));
+  console.log(chalk.bold(`Generating sitemaps for ${sections.join(', ')}`));
+  const spinner = ora().start();
+  spinner.color = 'cyan';
 
   //   let locTemplate;
   //   for (let index of sections) {

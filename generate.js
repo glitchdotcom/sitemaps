@@ -38,7 +38,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const hitToParams = (item) => {
+    function hitToParams (item) {
       // get template for formatting the full URL
       const loc = locTemplate(item);
 

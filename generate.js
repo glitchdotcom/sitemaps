@@ -31,15 +31,18 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     };
     
    const hitToParams = (item) => {
+      // get template for formatting the full URL
       const loc = locTemplate(item);
-      // TODO: use the actual lastmod date
-      // Mads will add lastmod date to the indices within a week or two
-      const lastmod = new Date().toISOString();
+
+      // use updatedAt if it's available, otherwise use
+      const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
+      const lastmod = date.toISOString();
       const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
+     // console.log(item);
 
       return {
         loc,

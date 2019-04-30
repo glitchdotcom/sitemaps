@@ -64,7 +64,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
-      console.log({
+      console.log(index, {
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,
@@ -77,6 +77,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
+      await new Promise(r => setTimeout(r, 5e3))
     } catch (_) {
       //console.log(_);
       spinner.fail();

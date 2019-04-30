@@ -5,7 +5,8 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "algolia-sitemap": "^2.1.1"
+    "algolia-sitemap": "^2.1.1",
+    "gauge": "^2.7.4"
   },
   "engines": {
     "node": "10.x"

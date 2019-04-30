@@ -9,13 +9,14 @@ const glitchDomain = 'https://glitch.com';
 const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
 
-function generate(sections = ['projects', 'users', 'teams', 'collections']) {
-  console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}`));
+async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
+  console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
 
   for (let index of sections) {
     const spinner = ora(chalk.bold(index)).start();
     spinner.color = 'blue';
-        
+    
+    let locTemplate;
     switch (index) {
       case 'projects':
         locTemplate = (project) => `${glitchDomain}/~${project.domain}`;
@@ -40,8 +41,6 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
-      // console.log(item);
-      // console.log(loc);
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -64,18 +63,17 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
 
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
-    algoliaSitemap({
-      algoliaConfig,
-      sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
-      outputFolder: `.data/${index}`,
-      hitToParams,
-    }).then((err, res) => {
-      if (err) {
-        spinner.fail();
-      }
-      else {
-        spinner.succeed();
-      }
-    })
+    try {
+      await algoliaSitemap({
+        algoliaConfig,
+        sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
+        outputFolder: `.data/${index}`,
+        hitToParams,
+      });
+      spinner.succeed();
+    } catch (_) {
+      spinner.fail();
+    }
   }
+  console.log('\nGenerated sitemaps are in the .data directory');
 }

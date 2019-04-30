@@ -16,6 +16,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   for (let index of sections) {
     const spinner = ora(chalk.bold(index)).start();
     spinner.color = 'blue';
+    // console.log('started');
         
     switch (index) {
       case 'projects':
@@ -67,7 +68,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
       outputFolder: `.data/${index}`,
       hitToParams,
-    });
-    spinner.stop();
+    }).then((err, res) => spinner.stop());
   }
+  console.log(`\n${chalk.green.bold('Done ✓')}\nGenerated sitemaps are in the /.data directory`);
 }

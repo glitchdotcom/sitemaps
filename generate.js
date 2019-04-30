@@ -29,20 +29,21 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: indices[index],
     };
-    
-   const hitToParams = (item) => {
+
+    const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
-      // use updatedAt if it's available, otherwise use
+      // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
       const lastmod = date.toISOString();
-      const priority = 0.6; // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
-      
+
+      // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
+      const priority = 0.6;
+
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-     // console.log(item);
 
       return {
         loc,

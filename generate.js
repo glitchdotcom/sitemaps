@@ -38,9 +38,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    function hitToParams (item) {
+    const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
+      console.log(item
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -72,6 +73,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       });
       spinner.succeed();
     } catch (_) {
+      //console.log(_);
       spinner.fail();
     }
   }

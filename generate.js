@@ -77,7 +77,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
-      await new Promise(r => setTimeout(r, 5e3))
     } catch (_) {
       //console.log(_);
       spinner.fail();

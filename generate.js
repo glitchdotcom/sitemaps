@@ -12,7 +12,6 @@ args.length ? generate(args) : generate();
 function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}`));
 
-  let locTemplate;
   for (let index of sections) {
     const spinner = ora(chalk.bold(index)).start();
     spinner.color = 'blue';
@@ -41,6 +40,8 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
+      // console.log(item);
+      // console.log(loc);
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -49,6 +50,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       const priority = 0.6;
 
+      // don't include private or not safe for kids items
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }

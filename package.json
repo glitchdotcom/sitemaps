@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.16.4",
     "algolia-sitemap": "^2.1.1",
-    "gauge": "^2.7.4"
+    "chalk": "^2.4.2",
+    "progress": "^2.0.3"
   },
   "engines": {
     "node": "10.x"

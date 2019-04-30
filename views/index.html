@@ -8,9 +8,9 @@
   
   <body>
     <style>
-      body { font-family: 'Courier New', monospace; font-size: 14px; padding: 0 15px; line-height: 1.5; }
+      body { font-family: 'Courier New', monospace; font-size: 16px; padding: 0 15px; max-width: 650px; line-height: 1.6; }
       pre, code { background: #eee; font-size: inherit; }
-      pre { white-space: pre-line; padding: 15px; max-width: 600px;}
+      pre { white-space: pre-line; padding: 15px; }
       code { padding: 2px 5px; }
       .comment { color: gray; }
     </style>
@@ -30,5 +30,13 @@
       <span class="comment"># rebuild the projects and users sitemaps</span>
       npm run generate projects users
     </pre>
+    
+    <p>
+      Generated sitemaps are written to <code>.data</code> and served from <code>/projects</code>, <code>/teams</code>, <code>/users</code>, and <code>/collections</code>.
+    </p>
+
+    <p>
+      ⏱ <em>Note: Generating the projects sitemaps takes a few minutes</em>
+    </p>
   </body>
 </html>

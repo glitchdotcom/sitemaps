@@ -39,8 +39,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
-      console.log(item);
-      console.log('Date.now()'
+      // console.log(item);
+      console.log('Date.now()', Date.now());
+      console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -66,12 +67,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
-      console.log(index, {
-        algoliaConfig,
-        sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
-        outputFolder: `.data/${index}`,
-        hitToParams,
-      })
       await algoliaSitemap({
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
@@ -79,9 +74,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
-    } catch (_) {
-      //console.log(_);
-      spinner.fail();
+    } catch (err) {
+      spinner.fail(`${index}: ${err.toString()}`);
     }
   }
   console.log('\nGenerated sitemaps are in the .data directory');

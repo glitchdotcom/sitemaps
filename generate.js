@@ -39,6 +39,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
+      console.log(item);
       // get template for formatting the full URL
       const loc = locTemplate(item);
 

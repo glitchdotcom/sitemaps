@@ -2,7 +2,7 @@ const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const getUserById = require('api').getUserById;
+const getUserById = require('./api').getUserById;
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -40,13 +40,13 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
-      console.log(item);
+      // console.log(item);
       
       let isAnon = item.isAnon;
       if (index === 'projects') {
         // need to fetch user data to know if a project only has anonymous members
         // if a project has at least one authed user,
-        getUserById(item.members[0]).then(res => console.log(res));
+        getUserById(item.members[0]).then(res => console.log(res)).catch(err => console.log(err));
       }
       
       // console.log('Date.now()', Date.now());

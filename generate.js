@@ -39,9 +39,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
-      // console.log(item);
-      console.log('Date.now()', Date.now());
-      console.log('item.createdAt', Date(item.createdAt).UTC());
+      console.log(item);
+      // console.log('Date.now()', Date.now());
+      // console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
       const loc = locTemplate(item);
 

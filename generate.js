@@ -45,7 +45,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index === 'projects') {
         // need to fetch user data to know if a project only has anonymous members
         // if a project has at least one authed user, 
-        getUserById(item.members[0];
+        getUserById(item.members[0]);
       }
       
       // console.log('Date.now()', Date.now());

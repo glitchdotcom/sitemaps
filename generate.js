@@ -39,14 +39,14 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const hitToParams = (item) => {
-      // console.log(item);
+    const hitToParams = async (item) => {
+      console.log(item);
       
-      let isAnon = item.isAnon;
+      let isAnon = item.isAnon
       if (index === 'projects') {
-        // need to fetch user data to know if a project only has anonymous members
-        // if a project has at least one authed user,
-        getUserById(item.members[0]).then(res => console.log(res)).catch(err => console.log(err));
+        // check if the project is made by anonymous members
+        // if a project has at least one authed user, we'll include it in the sitemap
+        const user = await getUserById(item.members[0]);
       }
       
       // console.log('Date.now()', Date.now());

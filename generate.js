@@ -40,9 +40,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = async (item) => {
-      console.log(item);
+      // console.log(item);
       
-      let isAnon = item.isAnon
+      let isAnon = true;
+      if (index === 'users' && !item.login) {
+        console.log('anon');
+      }
       if (index === 'projects') {
         // check if the project is made by anonymous members
         // if a project has at least one authed user, we'll include it in the sitemap
@@ -53,6 +56,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       // console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
       const loc = locTemplate(item);
+      console.log(loc);
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();

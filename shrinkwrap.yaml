@@ -1,5 +1,5 @@
 dependencies:
-  algolia-sitemap: 2.1.1
+  algolia-sitemap: github.com/algolia/algolia-sitemap/11210008aa70775a7a6a583298bd4185b5e8e5b6
   axios: 0.18.0
   chalk: 2.4.2
   express: 4.16.4
@@ -20,14 +20,6 @@ packages:
       node: '>= 0.10.0'
     resolution:
       integrity: sha1-xdG9SxKQCPEWPyNvhuX66iAm4u8=
-  /algolia-sitemap/2.1.1:
-    dependencies:
-      algoliasearch: 3.32.1
-      jsx-string: 2.0.0
-      validator: 9.4.1
-    dev: false
-    resolution:
-      integrity: sha512-/Tylco52JjStKwKkMXvk6MsKD02RpRbpjbZJZ6U4zdqPib0fqrpdIc4lfdKfkUfHjmJ7x7XUb8/1tj0NObr98g==
   /algoliasearch/3.32.1:
     dependencies:
       agentkeepalive: 2.2.0
@@ -40,7 +32,7 @@ packages:
       inherits: 2.0.3
       isarray: 2.0.4
       load-script: 1.0.0
-      object-keys: 1.1.0
+      object-keys: 1.1.1
       querystring-es3: 0.2.1
       reduce: 1.0.2
       semver: 5.7.0
@@ -447,12 +439,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
-  /object-keys/1.1.0:
+  /object-keys/1.1.1:
     dev: false
     engines:
       node: '>= 0.4'
     resolution:
-      integrity: sha512-6OO5X1+2tYkNyNEx6TsCxEqFfRWaqx6EtMiSbGrw8Ob8v9Ne+Hl8rBAgLBZn5wjEz3s/s6U1WXFUFOcxxAwUpg==
+      integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
   /on-finished/2.3.0:
     dependencies:
       ee-first: 1.1.1
@@ -538,7 +530,7 @@ packages:
       integrity: sha512-9esiElv1BrZoI3rCDuOuKCBRbuApGGaDPQfjSflGxdy4oyzqghxu6klEkkVIvBje+FF0BX9coEv8KqW6X/7njw==
   /reduce/1.0.2:
     dependencies:
-      object-keys: 1.1.0
+      object-keys: 1.1.1
     dev: false
     resolution:
       integrity: sha512-xX7Fxke/oHO5IfZSk77lvPa/7bjMh9BuCk4OOoX5XTXrM7s0Z+MkPfSDfz0q7r91BhhGSs8gii/VEN/7zhCPpQ==
@@ -662,12 +654,12 @@ packages:
       node: '>= 0.4.0'
     resolution:
       integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
-  /validator/9.4.1:
+  /validator/10.11.0:
     dev: false
     engines:
       node: '>= 0.10'
     resolution:
-      integrity: sha512-YV5KjzvRmSyJ1ee/Dm5UED0G+1L4GZnLN3w6/T+zZm8scVua4sOhYKWTUrKa0H/tMiJyO9QLHMPN+9mB/aMunA==
+      integrity: sha512-X/p3UZerAIsbBfN/IwahhYaBbY68EN/UQBWHtsbXGT5bfrH/p4NQzUCG1kF/rtKaNpnJ7jAu6NGTdSNtyNIXMw==
   /vary/1.1.2:
     dev: false
     engines:
@@ -680,11 +672,23 @@ packages:
     dev: false
     resolution:
       integrity: sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
+  github.com/algolia/algolia-sitemap/11210008aa70775a7a6a583298bd4185b5e8e5b6:
+    dependencies:
+      algoliasearch: 3.32.1
+      jsx-string: 2.0.0
+      validator: 10.11.0
+    dev: false
+    name: algolia-sitemap
+    prepare: true
+    requiresBuild: true
+    resolution:
+      tarball: 'https://codeload.github.com/algolia/algolia-sitemap/tar.gz/11210008aa70775a7a6a583298bd4185b5e8e5b6'
+    version: 2.1.1
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  algolia-sitemap: ^2.1.1
+  algolia-sitemap: 'github:algolia/algolia-sitemap#master'
   axios: ^0.18.0
   chalk: ^2.4.2
   express: ^4.16.4

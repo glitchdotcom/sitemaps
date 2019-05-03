@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "algolia-sitemap": "^2.1.1",
+    "algolia-sitemap": "algolia/algolia-sitemap#master",
     "chalk": "^2.4.2",
     "ora": "^3.4.0",
     "axios": "^0.18.0"

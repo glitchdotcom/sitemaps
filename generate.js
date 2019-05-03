@@ -42,21 +42,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     const hitToParams = async (item) => {
       // console.log(item);
       
-      let isAnon = true;
-      if (index === 'users' && !item.login) {
-        console.log('anon');
-      }
-      if (index === 'projects') {
-        // check if the project is made by anonymous members
-        // if a project has at least one authed user, we'll include it in the sitemap
-        const user = await getUserById(item.members[0]);
-      }
-      
       // console.log('Date.now()', Date.now());
       // console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
       const loc = locTemplate(item);
-      console.log(loc);
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -68,6 +57,23 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       // don't include private or not safe for kids items
       if (item.notSafeForKids || item.isPrivate) {
         return null;
+      }
+      
+      // don't include projects by anons
+      if (index === 'projects') {
+        let isAnon = true;
+        let i = 0;
+        while (isAnon && i < item.members.length) {
+          // if a project has at least one authed user, we'll include it in the sitemap
+          const user = await getUserById(item.members[0]);
+          if (user.login) {
+            isAnon = false;
+          }
+        }
+        
+        if (isAnon) {
+          return null;
+        }
       }
 
       return {

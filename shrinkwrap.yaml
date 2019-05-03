@@ -688,7 +688,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  algolia-sitemap: 'github:algolia/algolia-sitemap#master'
+  algolia-sitemap: 'github:algolia/algolia-sitemap#11210008aa70775a7a6a583298bd4185b5e8e5b6'
   axios: ^0.18.0
   chalk: ^2.4.2
   express: ^4.16.4

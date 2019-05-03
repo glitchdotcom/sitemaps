@@ -72,6 +72,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         }
         
         if (isAnon) {
+          console.log(item);
           return null;
         }
       }

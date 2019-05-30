@@ -40,8 +40,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = async (item) => {
-      // console.log(item);
-      
+      console.log(item);
       // console.log('Date.now()', Date.now());
       // console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
@@ -54,12 +53,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       const priority = 0.6;
 
-      // don't include private or not safe for kids items
+      // exclude private or not safe for kids items
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
       
-      // don't include projects by anons
+      // only include a project if it has at least one authed user
       if (index === 'projects') {
         let isAnon = true;
         let i = 0;
@@ -72,7 +71,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         }
         
         if (isAnon) {
-          console.log(item);
           return null;
         }
       }

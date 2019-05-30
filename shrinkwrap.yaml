@@ -1,5 +1,5 @@
 dependencies:
-  algolia-sitemap: github.com/algolia/algolia-sitemap/11210008aa70775a7a6a583298bd4185b5e8e5b6
+  algolia-sitemap: 2.2.0
   axios: 0.18.0
   chalk: 2.4.2
   express: 4.16.4
@@ -20,7 +20,15 @@ packages:
       node: '>= 0.10.0'
     resolution:
       integrity: sha1-xdG9SxKQCPEWPyNvhuX66iAm4u8=
-  /algoliasearch/3.32.1:
+  /algolia-sitemap/2.2.0:
+    dependencies:
+      algoliasearch: 3.33.0
+      jsx-string: 2.0.0
+      validator: 10.11.0
+    dev: false
+    resolution:
+      integrity: sha512-D1nSdHPO2u4h8s7s2yjVHyHe4u/Q9wDrahQ2iJt2CPSTcU+iDt6WQ5HkxnXMG6ksqXzqj3A3B/fXaNB+nvzGDg==
+  /algoliasearch/3.33.0:
     dependencies:
       agentkeepalive: 2.2.0
       debug: 2.6.9
@@ -41,7 +49,7 @@ packages:
     engines:
       node: '>=0.8'
     resolution:
-      integrity: sha512-NaaHMboU9tKwrU3aim7LlzSDqKb+1TGaC+Lx3NOttSnuMHbPpaf+7LtJL4KlosbRWEwqb9t5wSYMVDrPTH2dNA==
+      integrity: sha512-9DaVmOd7cvcZeYyV0BWAeJHVWJmgOL2DNUEBY/DTR4MzD1wCWs4Djl7LAlfvkGwGBdRHZCG+l0HA1572w3T8zg==
   /ansi-regex/4.1.0:
     dev: false
     engines:
@@ -672,23 +680,11 @@ packages:
     dev: false
     resolution:
       integrity: sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
-  github.com/algolia/algolia-sitemap/11210008aa70775a7a6a583298bd4185b5e8e5b6:
-    dependencies:
-      algoliasearch: 3.32.1
-      jsx-string: 2.0.0
-      validator: 10.11.0
-    dev: false
-    name: algolia-sitemap
-    prepare: true
-    requiresBuild: true
-    resolution:
-      tarball: 'https://codeload.github.com/algolia/algolia-sitemap/tar.gz/11210008aa70775a7a6a583298bd4185b5e8e5b6'
-    version: 2.1.1
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  algolia-sitemap: 'github:algolia/algolia-sitemap#11210008aa70775a7a6a583298bd4185b5e8e5b6'
+  algolia-sitemap: ^2.2.0
   axios: ^0.18.0
   chalk: ^2.4.2
   express: ^4.16.4

@@ -40,29 +40,23 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const validateProject = async (project) => {
-     
       // exclude projects created within the last 24 hours
       // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
-      const elapsed = (Date.now()) - Date(project.createdAt).UTC();
+      const elapsed = Date.now() - Date(project.createdAt).UTC();
       const oneDay = 1000 * 60 * 60 * 24;
       if (elapsed < oneDay) {
         return;
       }
 
       // exclude projects made by anons, must have at least one authed user to be included
-      let isAnon = true;
+      let anon = true;
       let i = 0;
-      while (isAnon && i < project.members.length) {
+      while (anon && i < project.members.length) {
         const user = await getUserById(project.members[0]);
-        if (user.login) {
-          isAnon = false;
-        }
+        anon = user.login ? false : true;
         i++;
       }
-
-      if (isAnon) {
-        return null;
-      }
+      return !anon;
     };
 
     const hitToParams = async (item) => {
@@ -81,7 +75,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         return null;
       }
 
-      // extra validation for projects: exclude anon and just created projects
+      // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' && !(await validateProject(item))) {
         return null;
       }

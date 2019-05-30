@@ -40,9 +40,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = async (item) => {
-      console.log(item);
-      // console.log('Date.now()', Date.now());
-      // console.log('item.createdAt', Date(item.createdAt).UTC());
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -57,9 +54,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-      
+            
       // only include a project if it has at least one authed user
       if (index === 'projects') {
+        if (!validateProject(item)) {}
         let isAnon = true;
         let i = 0;
         while (isAnon && i < item.members.length) {
@@ -97,4 +95,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     }
   }
   console.log('\nGenerated sitemaps are in the .data directory');
+}
+
+function validateProject(project) {
+        console.log('Date.now()', Date.now());
+      console.log('item.createdAt', Date(item.createdAt).UTC());
 }

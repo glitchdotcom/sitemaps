@@ -40,18 +40,24 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const validateProject = async (project) => {
-      let valid;
-      console.log('Date.now()', Date.now());
-      console.log('item.createdAt', Date(project.createdAt).UTC());
+     
+      // exclude projects created within the last 24 hours
+      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
+      const elapsed = (Date.now()) - Date(project.createdAt).UTC();
+      const oneDay = 1000 * 60 * 60 * 24;
+      if (elapsed < oneDay) {
+        return;
+      }
 
+      // exclude projects made by anons, must have at least one authed user to be included
       let isAnon = true;
       let i = 0;
       while (isAnon && i < project.members.length) {
-        // if a project has at least one authed user, we'll include it in the sitemap
         const user = await getUserById(project.members[0]);
         if (user.login) {
           isAnon = false;
         }
+        i++;
       }
 
       if (isAnon) {

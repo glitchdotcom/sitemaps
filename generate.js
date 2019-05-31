@@ -39,7 +39,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const validateProject = async (project) => {
+    const isProjectValid = async (project) => {
       try {
         // exclude projects created within the last 24 hours
         // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
@@ -80,7 +80,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !(validateProject(item))) {
+      if (index === 'projects' && !(isProjectValid(item))) {
         return null;
       }
 

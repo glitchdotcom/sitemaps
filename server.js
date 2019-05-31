@@ -8,7 +8,9 @@ const fs = require('fs');
 // all large assets need to live in .data
 app.use(express.static('.data'));
 
+app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');

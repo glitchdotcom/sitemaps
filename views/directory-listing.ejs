@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= index %> sitemaps</title>
+    <link rel="icon" href="https://cdn.glitch.com/c01e2e7a-88f1-4de9-809c-88f43f72430e%2Fspiderweb.png?1554480801492"/>
+  </head>
+  
+  <body>
+    <ul>
+      <% sitemaps.forEach(sitemap) { %>
+        <li><a href="<%= sitemap %>"><%= sitemap %></a></li>
+      <% }); %>
+    </ul>
+  </body>
+</html>

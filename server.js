@@ -8,13 +8,18 @@ const fs = require('fs');
 // all large assets need to live in .data
 app.use(express.static('.data'));
 
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
 app.get('/:index', async function(req, res) {
-  const sitemaps = await fs.readdir(`.data/${index}`);
-})
+  const { index } = req.params;
+  fs.readdir(`.data/${index}`, (err, data) => {
+    res.render('directory-listing', { title: `${index} sitemaps`, sitemaps: data });
+  });
+});
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function() {

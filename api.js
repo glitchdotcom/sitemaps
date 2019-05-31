@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 module.exports.getUserById = function(id) {
-  axios
+  return axios
     .get(`https://api.glitch.com/v1/users/by/id?id=${id}`)
     .then((res) => res.data)
-    .catch((error) => error);
+    .catch((error) => { throw error });
 };

@@ -39,28 +39,24 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const isProjectValid = async (project) => {
-      try {
-        // exclude projects created within the last 24 hours
-        // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
-        const elapsed = Date.now() - Date.UTC(project.createdAt);
-        const oneDay = 1000 * 60 * 60 * 24;
-        if (elapsed < oneDay) {
-          return false;
-        }
-
-        // exclude projects made by anons, must have at least one authed user to be included
-        let anon = true;
-        let i = 0;
-        while (anon && i < project.members.length) {
-          const user = await getUserById(project.members[0]);
-          anon = user.login ? false : true;
-          i++;
-        }
-        return !anon;
-      } catch (error) {
-        console.log(error);
+    const isProjectValid = (project) => {
+      // exclude projects created within the last 24 hours
+      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
+      const elapsed = Date.now() - Date.UTC(project.createdAt);
+      const oneDay = 1000 * 60 * 60 * 24;
+      if (elapsed < oneDay) {
+        return false;
       }
+
+      // exclude projects made by anons, must have at least one authed user to be included
+      let atleastOneAuthedUser = false;
+      let i = 0;
+      while (!atleastOneAuthedUser && i < project.members.length) {
+        const user = getUserById(project.members[0]);
+        atleastOneAuthedUser = user.login ? true : false;
+        i++;
+      }
+      return atleastOneAuthedUser;
     };
 
     const hitToParams = (item) => {
@@ -80,7 +76,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !(isProjectValid(item))) {
+      if (index === 'projects' && !isProjectValid(item)) {
         return null;
       }
 
@@ -101,8 +97,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
-    } catch (err) {
-      spinner.fail(`${index}: ${err.toString()}`);
+    } catch (error) {
+      spinner.fail(`${index}: ${error.toString()}`);
     }
   }
   console.log('\nGenerated sitemaps are in the .data directory');

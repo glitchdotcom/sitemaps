@@ -80,7 +80,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         return null;
       }
       
-      // remove 
+      // remove pages with a noindex tag: any users/teams/collections that are empty
+      
 
       return {
         loc,

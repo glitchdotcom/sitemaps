@@ -79,6 +79,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index === 'projects' && !isProjectValid(item)) {
         return null;
       }
+      
+      // remove 
 
       return {
         loc,

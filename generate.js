@@ -101,7 +101,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       });
       spinner.succeed();
     } catch (error) {
-      spinner.fail(`generate error ${index}: ${error.toString()}`);
+      spinner.fail(`${index}: ${error.toString()}`);
     }
   }
   console.log('\nGenerated sitemaps are in the .data directory');

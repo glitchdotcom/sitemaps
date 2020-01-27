@@ -76,9 +76,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !isProjectValid(item)) {
+      /* if (index === 'projects' && !isProjectValid(item)) {
         return null;
-      }
+      } */
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       

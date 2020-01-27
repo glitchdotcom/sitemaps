@@ -6,6 +6,5 @@ module.exports.getUserById = async function(id) {
     return res.data;
   } catch(error) {
     console.log(error);
-    throw error;
   }
 };

@@ -53,7 +53,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
         const user = getUserById(project.members[0]);
-        console.log(user)
+        // console.log(user)
         atleastOneAuthedUser = user.login ? true : false;
         i++;
       }

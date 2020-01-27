@@ -39,7 +39,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const isProjectValid = async (project) => {
+    const isProjectValid = (project) => {
       // exclude projects created within the last 24 hours
       // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
       const elapsed = Date.now() - Date.UTC(project.createdAt);
@@ -52,7 +52,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
-        const user = await getUserById(project.members[0]);
+        const user = getUserById(project.members[0]);
         atleastOneAuthedUser = user.login ? true : false;
         i++;
       }

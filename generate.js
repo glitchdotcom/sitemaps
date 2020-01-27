@@ -47,16 +47,17 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (elapsed < oneDay) {
         return false;
       }
+      return true;
 
       // exclude projects made by anons, must have at least one authed user to be included
-      let atleastOneAuthedUser = false;
+      /* let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
         const user = getUserById(project.members[0]);
         atleastOneAuthedUser = user.login ? true : false;
         i++;
       }
-      return atleastOneAuthedUser;
+      return atleastOneAuthedUser; */
     };
 
     const hitToParams = (item) => {
@@ -76,9 +77,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      /* if (index === 'projects' && !isProjectValid(item)) {
+      if (index === 'projects' && !isProjectValid(item)) {
         return null;
-      } */
+      }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       

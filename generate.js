@@ -82,7 +82,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       
-
+      console.log('valid project found')
       return {
         loc,
         lastmod,

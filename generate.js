@@ -102,7 +102,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       if (index !== 'projects' && await isPageEmpty(item)) {
-        console.log(item + ' is an empty page')
         return null;
       }
       

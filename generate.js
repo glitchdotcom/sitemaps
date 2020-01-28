@@ -65,6 +65,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
+      console.log(item)
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -86,11 +87,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      /* if (index !== 'projects' && ) {
+      /* if (index !== 'projects' && !isPageEmpty(item)) {
         return null;
       } */
       
-      console.log(chalk.gray.bold('valid item found'))
       return {
         loc,
         lastmod,

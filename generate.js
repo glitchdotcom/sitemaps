@@ -129,3 +129,27 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
   }
   console.log('\nGenerated sitemaps are in the .data directory');
 }
+
+
+/*
+
+Error: loc "undefined" was not valid. It's required.
+
+see https://www.sitemaps.org/protocol.html
+    at isValidURL (/rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/sitemap.js:47:11)
+    at url (/rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/sitemap.js:175:23)
+    at Array.map (<anonymous>)
+    at createSitemap (/rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/sitemap.js:229:13)
+    at /rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/index.js:35:20
+    at Generator.next (<anonymous>)
+    at step (/rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/index.js:3:191)
+    at /rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/index.js:3:437
+    at new Promise (<anonymous>)
+    at /rbd/pnpm-volume/e4b14a4b-0348-4a18-89e2-5d8d9c2ca6cc/node_modules/.registry.npmjs.org/algolia-sitemap/2.2.0/node_modules/algolia-sitemap/build/index.js:3:99
+✖ collections: Error: loc "undefined" was not valid. It's required.
+
+see https://www.sitemaps.org/protocol.html
+
+Generated sitemaps are in the .data directory
+
+*/

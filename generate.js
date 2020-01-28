@@ -104,7 +104,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         console.log(item + ' is an empty collection')
         return null;
       }
-      console.log('found valid item')
+      
       return {
         loc,
         lastmod,

@@ -50,7 +50,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         locTemplate = (team) => `${glitchDomain}/@${team.url}`;
         break;
       case 'collections':
-        return getCollectionsByUrl(page.fullUrl);
+        const isEmpty = getCollectionsByUrl(page.fullUrl);
+        console.log('empty?', isEmpty)
+          return isEmpty
         break;
     }
       

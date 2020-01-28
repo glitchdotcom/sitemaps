@@ -51,6 +51,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         break;
       case 'collections':
         const isEmpty = getCollectionsByUrl(page.fullUrl);
+          console.log(isEmpty)
           return isEmpty
         break;
     }

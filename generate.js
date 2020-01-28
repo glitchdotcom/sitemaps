@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const getUserLoginById = require('./api').getUserLoginById;
-const getCollectionsByUrl = require('./api').getCollectionsByUrl;
+const isEmptyCollection = require('./api').isEmptyCollection;
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -44,13 +44,13 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       // exclude pages that have no projects on them, whether user, team or collection
       switch (index) {
       case 'users':
-        locTemplate = (user) => `${glitchDomain}/@${user.login}`;
+        
         break;
       case 'teams':
-        locTemplate = (team) => `${glitchDomain}/@${team.url}`;
+        
         break;
       case 'collections':
-        const isEmpty = await getCollectionsByUrl(page.fullUrl);
+        const isEmpty = await isEmptyCollection(page.fullUrl);
           console.log(isEmpty)
           return isEmpty
         break;

@@ -6,11 +6,11 @@ module.exports.getUserLoginById = async function(id) {
   .catch((error) => console.log('error getting user ' + id));
 }
 
-module.exports.getCollectionsByUrl = async function(url) {
+module.exports.isEmptyCollection = async function(url) {
   try {
-  const res = await axios.get(`https://api.glitch.com/v1/collections/by/fullUrl/projects?limit=1&fullUrl=${url}`)
-  } catch (error)
-  .then((res) => { /*res.data.items.length === 0;*/ return res.data.items.length === 0 })
-  .catch((error) => console.log('error getting collection ' + url));
-  return res;
+    const res = await axios.get(`https://api.glitch.com/v1/collections/by/fullUrl/projects?limit=1&fullUrl=${url}`)
+    return res.data.items.length === 0;
+  } catch (error) {
+    console.log('error getting collection ' + url);
+  }
 }

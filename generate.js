@@ -47,9 +47,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (elapsed < oneDay) {
         return false;
       }
-
+return true;
       // exclude projects made by anons, must have at least one authed user to be included
-      let atleastOneAuthedUser = false;
+      /* let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
         const user = getUserById(project.members[0]);
@@ -57,6 +57,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         i++;
       }
       return atleastOneAuthedUser;
+      */
     };
 
     const hitToParams = (item) => {

@@ -11,9 +11,10 @@ module.exports.getUserById = function(id) {
 };
 */
 
-module.exports.getUserById = function(id) {
+/* module.exports.getUserById = function(id) {
   return axios
     .get(`https://api.glitch.com/v1/users/by/id?id=${id}`)
     .then((res) => {res.data; console.log('api.js', res.data);})
     .catch((error) => { console.log("error getting user " + id) });
-};
+}; */
+

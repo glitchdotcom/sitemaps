@@ -4,6 +4,7 @@ const ora = require('ora');
 
 const getUserLoginById = require('./api').getUserLoginById;
 const isEmptyCollection = require('./api').isEmptyCollection;
+const api = require('./api');
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -47,11 +48,11 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         
         break;
       case 'teams':
-        
+        const isEmpty = await api.isEmptyTeamPage(page.url);
+        return isEmpty;
         break;
       case 'collections':
-        const isEmpty = await isEmptyCollection(page.fullUrl);
-        return isEmpty;
+        return await isEmptyCollection(page.fullUrl);
         break;
     }
       

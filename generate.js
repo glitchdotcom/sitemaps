@@ -51,14 +51,13 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         break;
       case 'collections':
         const isEmpty = await isEmptyCollection(page.fullUrl);
-          console.log(isEmpty)
-          return isEmpty
+        return isEmpty;
         break;
     }
       
     }
 
-    const isProjectValid = (project) => {
+    const isProjectValid = async (project) => {
       // exclude projects created within the last 24 hours
       // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
       const elapsed = Date.now() - Date.UTC(project.createdAt);
@@ -71,7 +70,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
-        const login = getUserLoginById(project.members[0]);
+        const login = await getUserLoginById(project.members[0]);
         atleastOneAuthedUser = login != null ? true : false;
         i++;
       }
@@ -95,16 +94,16 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !isProjectValid(item)) {
+      if (index === 'projects' && await !isProjectValid(item)) {
         return null;
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       if (index !== 'projects' && await isPageEmpty(item)) {
-        //console.log(item + ' is an empty collection')
+        console.log(item + ' is an empty collection')
         return null;
       }
-      
+      console.log('found valid item')
       return {
         loc,
         lastmod,

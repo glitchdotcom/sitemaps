@@ -1,7 +1,6 @@
 // init project
 const express = require('express');
 const app = express();
-const isEmptyCollection = require('./api').isEmptyCollection;
 const fs = require('fs');
 
 // this project's disk storage was manually bumped to 1GB to accomodate large sitemaps
@@ -18,8 +17,6 @@ app.get('/', function(req, res) {
 
 app.get('/:index', async function(req, res) {
   const { index } = req.params;
-  const apicall = await isEmptyCollection('whimsicallyson/public-collection');
-  console.log(apicall)
   fs.readdir(`.data/${index}`, (err, data) => {
     res.render('directory-listing', { title: `${index} sitemaps`, sitemaps: data });
   });

@@ -2,7 +2,7 @@ const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const getUserById = require('./api').getUserById;
+const getUserLoginById = require('./api').getUserLoginById;
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -52,9 +52,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
-        const user = getUserById(project.members[0]);
-        console.log('generate.js', user.login)
-        atleastOneAuthedUser = user.login ? true : false;
+        const login = getUserLoginById(project.members[0]);
+        atleastOneAuthedUser = login != null ? true : false;
         i++;
       }
       return atleastOneAuthedUser;
@@ -83,7 +82,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       
-      console.log(chalk.red.bold('valid project found'))
+      console.log(chalk.gray.bold('valid project found'))
       return {
         loc,
         lastmod,

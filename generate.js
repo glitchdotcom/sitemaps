@@ -38,6 +38,11 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: indices[index],
     };
+    
+    const isPageEmpty = (page) => {
+      // exclude pages that have no projects on them, whether user, team or collection
+      
+    }
 
     const isProjectValid = (project) => {
       // exclude projects created within the last 24 hours
@@ -81,8 +86,11 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
+      /* if (index !== 'projects' && ) {
+        return null;
+      } */
       
-      console.log(chalk.gray.bold('valid project found'))
+      console.log(chalk.gray.bold('valid item found'))
       return {
         loc,
         lastmod,

@@ -40,7 +40,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
     
-    const isPageEmpty = (page) => {
+    const isPageEmpty = async (page) => {
       // exclude pages that have no projects on them, whether user, team or collection
       switch (index) {
       case 'users':
@@ -50,7 +50,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         locTemplate = (team) => `${glitchDomain}/@${team.url}`;
         break;
       case 'collections':
-        const isEmpty = getCollectionsByUrl(page.fullUrl);
+        const isEmpty = await getCollectionsByUrl(page.fullUrl);
           console.log(isEmpty)
           return isEmpty
         break;
@@ -78,7 +78,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = (item) => {
+    const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -100,7 +100,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && isPageEmpty(item)) {
+      if (index !== 'projects' && await isPageEmpty(item)) {
         //console.log(item + ' is an empty collection')
         return null;
       }

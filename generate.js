@@ -95,6 +95,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' && await !isProjectValid(item)) {
+        console.log(chalk.red(item + ' is a project not worth indexing'))
         return null;
       }
       

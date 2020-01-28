@@ -51,7 +51,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         break;
       case 'collections':
         const isEmpty = getCollectionsByUrl(page.fullUrl);
-        console.log('empty?', isEmpty)
           return isEmpty
         break;
     }
@@ -100,8 +99,8 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && !isPageEmpty(item)) {
-        console.log(item + ' is an empty collection')
+      if (index !== 'projects' && isPageEmpty(item)) {
+        //console.log(item + ' is an empty collection')
         return null;
       }
       

@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const getUserLoginById = require('./api').getUserLoginById;
+const getCollectionsByUrl = require('./api').getCollectionsByUrl;
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -49,7 +50,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         locTemplate = (team) => `${glitchDomain}/@${team.url}`;
         break;
       case 'collections':
-        locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;
+        const hasCollections = getCollectionsByUrl(collection.fullUrl);
         break;
     }
       

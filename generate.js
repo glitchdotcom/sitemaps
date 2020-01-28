@@ -41,6 +41,17 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     
     const isPageEmpty = (page) => {
       // exclude pages that have no projects on them, whether user, team or collection
+      switch (index) {
+      case 'users':
+        locTemplate = (user) => `${glitchDomain}/@${user.login}`;
+        break;
+      case 'teams':
+        locTemplate = (team) => `${glitchDomain}/@${team.url}`;
+        break;
+      case 'collections':
+        locTemplate = (collection) => `${glitchDomain}/@${collection.fullUrl}`;
+        break;
+    }
       
     }
 
@@ -65,9 +76,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const hitToParams = (item) => {
-      console.log(item)
       // get template for formatting the full URL
       const loc = locTemplate(item);
+      console.log(index)
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();

@@ -53,7 +53,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
         const user = getUserById(project.members[0]);
-        console.log('generate.js', user)
+        console.log('generate.js', user.login)
         atleastOneAuthedUser = user.login ? true : false;
         i++;
       }
@@ -83,7 +83,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
       
-      console.log('valid project found')
+      console.log(chalk.red.bold('valid project found'))
       return {
         loc,
         lastmod,

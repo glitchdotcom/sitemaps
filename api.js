@@ -18,3 +18,8 @@ module.exports.getUserById = function(id) {
     .catch((error) => { console.log("error getting user " + id) });
 }; */
 
+module.exports.getUserById = async function(id) {
+  const res = await axios.get(`https://api.glitch.com/v1/users/by/id?id=${id}`)
+  .then((res) => {res.data; console.log('api', res.data);})
+  .catch((error) => console.log('error getting user ' + id));
+}

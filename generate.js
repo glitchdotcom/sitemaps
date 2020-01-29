@@ -54,8 +54,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       case 'collections':
         return await isEmptyCollection(page.fullUrl);
         break;
-    }
-      
+      }
     }
 
     const isProjectValid = async (project) => {
@@ -117,11 +116,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
+      const params = await hitToParams;
       await algoliaSitemap({
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,
-        hitToParams,
+        params,
       });
       spinner.succeed();
     } catch (error) {

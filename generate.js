@@ -104,7 +104,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
-      
+      console.log(loc)
       return {
         loc,
         lastmod,

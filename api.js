@@ -15,7 +15,7 @@ module.exports.isEmptyCollection = async function(url) {
     const res = await axios.get(`https://api.glitch.com/v1/collections/by/fullUrl/projects?limit=1&fullUrl=${safeUrl}`)
     return res.data.items.length === 0;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 

@@ -104,9 +104,11 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
-      console.log(loc)
+
+      const encodedLoc = encodeURI(loc)
+
       return {
-        loc,
+        encodedLoc,
         lastmod,
         priority,
       };

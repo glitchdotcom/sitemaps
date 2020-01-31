@@ -101,17 +101,14 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
       const encodedLoc = encodeURI(loc)
       
-      if (!encodedLoc.startsWith('https://glitch.com')) {
-        console.log(chalk.red('bad location'))
-        return;
-      }
-
       return {
         encodedLoc,
         lastmod,
         priority,
       };
     };
+    
+    const hit = await hitToParams();
 
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
@@ -120,7 +117,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,
-        hitToParams,
+        hit,
       });
       spinner.succeed();
     } catch (error) {

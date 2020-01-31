@@ -100,7 +100,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       const encodedLoc = encodeURI(loc)
-
+console.log(enc)
       return {
         encodedLoc,
         lastmod,

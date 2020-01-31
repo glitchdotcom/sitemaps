@@ -76,6 +76,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
+      console.log(item)
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();

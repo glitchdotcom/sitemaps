@@ -27,6 +27,7 @@ module.exports.isEmptyTeamPage = async function(url) {
   } catch (error) {
     console.log(error);
   }
+}
   
   module.exports.isEmptyUserPage = async function(login) {
   try {

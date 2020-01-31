@@ -73,7 +73,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = async (item) => {
+    const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -90,12 +90,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && await !isProjectValid(item)) {
+      if (index === 'projects' && !isProjectValid(item)) {
         return null;
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && await isPageEmpty(item)) {
+      if (index !== 'projects' && isPageEmpty(item)) {
         return null;
       }
 
@@ -108,8 +108,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       };
     };
     
-    const hit = await hitToParams();
-
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
@@ -117,7 +115,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,
-        hit,
+        hitToParams,
       });
       spinner.succeed();
     } catch (error) {

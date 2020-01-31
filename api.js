@@ -15,7 +15,7 @@ module.exports.isEmptyCollection = async function(url) {
     const res = await axios.get(`https://api.glitch.com/v1/collections/by/fullUrl/projects?limit=1&fullUrl=${safeUrl}`)
     return res.data.items.length === 0;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -28,10 +28,9 @@ module.exports.isEmptyTeamPage = async function(url) {
     console.log(error);
   }
   
-  module.exports.isEmptyUserPage = async function(url) {
-  const safeUrl = encodeURIComponent(url);
+  module.exports.isEmptyUserPage = async function(login) {
   try {
-    const res = await axios.get(`https://api.glitch.com/v1/users/by/url/projects?limit=1&url=${safeUrl}`)
+    const res = await axios.get(`https://api.glitch.com/v1/users/by/login/projects?limit=1&login=${login}`)
     return res.data.items.length === 0;
   } catch (error) {
     console.log(error);

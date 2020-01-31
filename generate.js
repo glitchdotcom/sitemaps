@@ -1,9 +1,6 @@
 const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
-
-const getUserLoginById = require('./api').getUserLoginById;
-const isEmptyCollection = require('./api').isEmptyCollection;
 const api = require('./api');
 const indices = require('./constants').INDICES;
 
@@ -45,14 +42,13 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       // exclude pages that have no projects on them, whether user, team or collection
       switch (index) {
       case 'users':
-        
+        return await api.isEmptyUserPage(page.login);
         break;
       case 'teams':
-        const isEmpty = await api.isEmptyTeamPage(page.url);
-        return isEmpty;
+        return await api.isEmptyTeamPage(page.url);
         break;
       case 'collections':
-        return await isEmptyCollection(page.fullUrl);
+        return await api.isEmptyCollection(page.fullUrl);
         break;
       }
     }
@@ -70,7 +66,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
-        const login = await getUserLoginById(project.members[0]);
+        const login = await api.getUserLoginById(project.members[0]);
         atleastOneAuthedUser = login != null ? true : false;
         i++;
       }
@@ -95,7 +91,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' && await !isProjectValid(item)) {
-        console.log(chalk.red(item + ' is a project not worth indexing'))
         return null;
       }
       

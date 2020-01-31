@@ -30,8 +30,9 @@ module.exports.isEmptyTeamPage = async function(url) {
 }
   
   module.exports.isEmptyUserPage = async function(login) {
+  const safeLogin = encodeURIComponent(login);
   try {
-    const res = await axios.get(`https://api.glitch.com/v1/users/by/login/projects?limit=1&login=${login}`)
+    const res = await axios.get(`https://api.glitch.com/v1/users/by/login/projects?limit=1&login=${safeLogin}`)
     return res.data.items.length === 0;
   } catch (error) {
     console.log(error);

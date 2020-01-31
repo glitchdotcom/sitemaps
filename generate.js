@@ -76,7 +76,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
-      console.log(item)
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -112,12 +111,11 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
-      const params = await hitToParams;
       await algoliaSitemap({
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,
-        params,
+        hitToParams,
       });
       spinner.succeed();
     } catch (error) {

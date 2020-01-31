@@ -100,7 +100,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       const encodedLoc = encodeURI(loc)
-console.log(enc)
+      
+      if (!encodedLoc.startsWith('https://glitch.com')) {
+        console.log(chalk.red('bad location'))
+        return;
+      }
+
       return {
         encodedLoc,
         lastmod,

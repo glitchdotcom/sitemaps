@@ -73,7 +73,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = (item) => {
+    const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
 
@@ -90,12 +90,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !isProjectValid(item)) {
+      if (index === 'projects' && await !isProjectValid(item)) {
         return null;
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && isPageEmpty(item)) {
+      if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
 

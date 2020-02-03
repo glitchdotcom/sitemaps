@@ -1,7 +1,6 @@
 // init project
 const express = require('express');
 const app = express();
-const api = require('./api');
 
 const fs = require('fs');
 
@@ -19,7 +18,6 @@ app.get('/', function(req, res) {
 
 app.get('/:index', async function(req, res) {
   const { index } = req.params;
-  console.log(await api.isEmptyUserPage('allyson.lubimir'))
   fs.readdir(`.data/${index}`, (err, data) => {
     res.render('directory-listing', { title: `${index} sitemaps`, sitemaps: data });
   });

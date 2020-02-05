@@ -88,7 +88,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-/*
+/* hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  !isProjectValid(item)) {
         return null;

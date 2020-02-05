@@ -75,7 +75,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
     const hitToParams = async (item) => {
       // get template for formatting the full URL
-      const loc = locTemplate(item);
+      const loc = encodeURI(locTemplate(item));
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -98,11 +98,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
-
-      const encodedLoc = encodeURI(loc)
       
       return {
-        encodedLoc,
+        loc,
         lastmod,
         priority,
       };

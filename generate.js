@@ -88,7 +88,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-
+/*
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  !isProjectValid(item)) {
         return null;
@@ -98,7 +98,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index !== 'projects' && isPageEmpty(item)) {
         return null;
       }
-      
+ */     
       return {
         loc,
         lastmod,

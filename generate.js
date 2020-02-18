@@ -73,7 +73,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = (item) => {
+    const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = encodeURI(locTemplate(item));
 
@@ -90,7 +90,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 /* hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' &&  !isProjectValid(item)) {
+      if (index === 'projects' &&  await !isProjectValid(item)) {
         return null;
       }
       

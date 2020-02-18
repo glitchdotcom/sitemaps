@@ -49,14 +49,14 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // exclude projects made by anons, must have at least one authed user to be included
-      // let atleastOneAuthedUser = false;
-      // let i = 0;
-      // while (!atleastOneAuthedUser && i < project.members.length) {
-      //   const login = getUserById(project.members[i]);
-      //   atleastOneAuthedUser = login != null ? true : false;
-      //   i++;
-      // }
-      // return atleastOneAuthedUser;
+      let atleastOneAuthedUser = false;
+      let i = 0;
+      while (!atleastOneAuthedUser && i < project.members.length) {
+        const login = getUserById(project.members[i]);
+        atleastOneAuthedUser = login != null ? true : false;
+        i++;
+      }
+      return atleastOneAuthedUser;
     };
 
     const hitToParams = (item) => {
@@ -76,9 +76,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       }
 
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !isProjectValid(item)) {
-        return null;
-      }
+      // if (index === 'projects' && !isProjectValid(item)) {
+      //   return null;
+      // }
 
       return {
         loc,

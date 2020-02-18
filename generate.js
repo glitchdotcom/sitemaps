@@ -12,7 +12,7 @@ const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
 // args.length ? filter(args) : filter();
 
-function generate(sections = ['projects', 'users', 'teams', 'collections']) {
+async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
 
   for (let index of sections) {
@@ -57,9 +57,9 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-        console.log(loc) 
+      //console.log(loc) 
       if (loc == "undefined" || !loc) {
-        return null;
+        loc = 'glortch.com'
       }
       return {
         loc,
@@ -71,7 +71,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
-      algoliaSitemap({
+      await algoliaSitemap({
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,

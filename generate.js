@@ -73,9 +73,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = async (item) => {
+    const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = encodeURI(locTemplate(item));
+
 
       // set lastmod with updatedAt if it's available, otherwise use the current date
       const date = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -88,17 +89,17 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-/* hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
+/* // hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  await !isProjectValid(item)) {
         return null;
       }
       
       // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && isPageEmpty(item)) {
+      if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
- */     
+*/     
       return {
         loc,
         lastmod,

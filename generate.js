@@ -39,9 +39,7 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: indices[index],
     };
-    
-
-    
+       
     const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = encodeURI(locTemplate(item));
@@ -131,6 +129,5 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
       if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
-    
-      }
+    }
 }

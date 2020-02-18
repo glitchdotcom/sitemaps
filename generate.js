@@ -73,7 +73,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       return atleastOneAuthedUser;
     };
 
-    const hitToParams = (item) => {
+    const hitToParams = async (item) => {
       // get template for formatting the full URL
       const loc = encodeURI(locTemplate(item));
 
@@ -89,7 +89,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-/* // hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
+      try {const empty = await isPageEmpty(item);
+      if(!loc) {console.log(index, item, empty)}}
+      catch (error) {console.log('errrrrror')}
+ // hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  await !isProjectValid(item)) {
         return null;
@@ -99,7 +102,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (index !== 'projects' && await isPageEmpty(item)) {
         return null;
       }
-*/     
+    
       return {
         loc,
         lastmod,

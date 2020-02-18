@@ -10,8 +10,9 @@ const glitchDomain = 'https://glitch.com';
 
 const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
+// args.length ? filter(args) : filter();
 
-function generate(sections = ['projects', 'users', 'teams', 'collections']) {
+async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
 
   for (let index of sections) {
@@ -82,8 +83,8 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   }
 
 }
-
-async function filter(sections = ['projects', 'users', 'teams', 'collections']) {
+/*
+function filter(sections = ['projects', 'users', 'teams', 'collections']) {
   for (let index of sections) {
     const spinner = ora(chalk.bold(index)).start();
     spinner.color = 'blue';
@@ -124,15 +125,17 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
     };
     
     const unfilteredSitemap = fs.readFileSync(`.data/${index}/sitemap.0.xml`); // will need to loop through all files
+    console.log(unfilteredSitemap.urls);
     
       // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' &&  await !isProjectValid(item)) {
-        return null;
-      }
+//       if (index === 'projects' &&  await !isProjectValid(item)) {
+//         return null;
+//       }
       
-      // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && await isPageEmpty(item)) {
-        return null;
-      }
+//       // remove pages with a noindex tag: any users/teams/collections that are empty
+//       if (index !== 'projects' && await isPageEmpty(item)) {
+//         return null;
+//       }
     }
 }
+*/

@@ -90,16 +90,18 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         return null;
       }
       
-   // hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
-      // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' &&  await !isProjectValid(item)) {
-        return null;
-      }
+      const thing = await isPageEmpty(item);
+      console.log(thing)
+//    // hitToParams doesn't play nicely with async functions, need more brains to figure out how to do this
+//       // extra validation for projects: exclude anon and newly-created projects
+//       if (index === 'projects' &&  await !isProjectValid(item)) {
+//         return null;
+//       }
       
-      // remove pages with a noindex tag: any users/teams/collections that are empty
-      if (index !== 'projects' && await isPageEmpty(item)) {
-        return null;
-      }
+//       // remove pages with a noindex tag: any users/teams/collections that are empty
+//       if (index !== 'projects' && await isPageEmpty(item)) {
+//         return null;
+//       }
     
       return {
         loc,
@@ -118,6 +120,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       
+      // fs.readfile
       spinner.succeed();
       console.log('\nGenerated sitemaps are in the .data directory');
     } catch (error) {

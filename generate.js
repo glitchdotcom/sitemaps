@@ -57,7 +57,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-          
+        console.log(loc) 
+      if (!loc) {
+        return null;
+      }
       return {
         loc,
         lastmod,
@@ -68,7 +71,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     // sitemaps must be <= 50k entries per file, and <= 50 MB
     // algolia-sitemap paginates automatically
     try {
-      algoliaSitemap({
+      await algoliaSitemap({
         algoliaConfig,
         sitemapLoc: `${glitchDomain}/sitemaps/${index}`,
         outputFolder: `.data/${index}`,

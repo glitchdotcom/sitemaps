@@ -123,7 +123,7 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
       return atleastOneAuthedUser;
     };
     
-    const unfilteredSitemap = fs.readFileSync(`.data/${index}/sitemap.[i].xml`);
+    const unfilteredSitemap = fs.readFileSync(`.data/${index}/sitemap.0.xml`); // will need to loop through all files
     
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  await !isProjectValid(item)) {

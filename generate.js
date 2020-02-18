@@ -69,6 +69,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
       // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       const priority = 0.6;
+      console.log(item)
 
       // exclude private or not safe for kids items
       if (item.notSafeForKids || item.isPrivate) {
@@ -102,3 +103,76 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     }
   }
 }
+
+
+/* 
+team item:
+{ url: 'prac',
+  name: 'Prac',
+  isVerified: false,
+  coverColor: '',
+  backgroundColor: '',
+  hasCoverImage: false,
+  hasAvatarImage: false,
+  notSafeForKids: false,
+  members: [ 6617454 ],
+  collections: [],
+  projects: [],
+  updatedAt: 1570195139565,
+  objectID: 'team-6647' }
+user item:
+{ name: 'Andromeda Bot creator',
+  login: 'eldilzsterino',
+  notSafeForKids: false,
+  description: '',
+  avatarUrl:
+   'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/e91254ef-eace-4051-80b8-d89d5f948336-large.png',
+  avatarThumbnailUrl:
+   'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/e91254ef-eace-4051-80b8-d89d5f948336-small.png',
+  coverColor: 'rgb(4,4,4)',
+  featuredProject: null,
+  thanks: 5,
+  updatedAt: 1570916055321,
+  hasCoverImage: true,
+  objectID: 'user-647877' }
+collection item:
+{ name: 'My Stuff',
+  isMyStuff: true,
+  isPrivate: true,
+  url: 'my-stuff',
+  fullUrl: 'dq89group/my-stuff',
+  avatarUrl:
+   'https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633',
+  avatarThumbnailUrl: null,
+  coverColor: '#70ea9f',
+  notSafeForKids: false,
+  projects: [],
+  user: 11339678,
+  team: -1,
+  teams: [ -1 ],
+  members: [ 11339678 ],
+  updatedAt: 1581521793685,
+  description: 'My place to save cool finds',
+  objectID: 'collection-35777' }
+project item:
+{ domain: 'assets-lib',
+  isPrivate: false,
+  members: [ 11, 728660 ],
+  collections:
+   [ 21643, 23325, 28381, 11977, 10373, 8777, 7045, 4109, 3503, 3415, 1584 ],
+  teams: [],
+  numRemixes: 160,
+  createdAt: '2017-04-06T17:47:55.660Z',
+  baseProject: 'cb02d9ae-61ed-4053-b465-d6e2e9656ac3',
+  notSafeForKids: false,
+  numAppVisits: 2023,
+  numEditorVisits: 2007,
+  dependencies: [ 'express' ],
+  keywords: [ 'node', 'express' ],
+  license: 'MIT',
+  showAsGlitchTeam: false,
+  updatedAt: 1550997654214,
+  description: 'Use relative paths to serve assets',
+  admins: [ 11, 728660 ],
+  objectID: 'project-cff88cd8-5482-4e3e-a13f-d2d224c6e756' }
+*/

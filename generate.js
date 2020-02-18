@@ -85,7 +85,10 @@ function generate(sections = ['projects', 'users', 'teams', 'collections']) {
 
 async function filter(sections = ['projects', 'users', 'teams', 'collections']) {
   for (let index of sections) {
-      const isPageEmpty = async (page) => {
+    const spinner = ora(chalk.bold(index)).start();
+    spinner.color = 'blue';
+    
+    const isPageEmpty = async (page) => {
       // exclude pages that have no projects on them, whether user, team or collection
       switch (index) {
       case 'users':
@@ -119,6 +122,8 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
       }
       return atleastOneAuthedUser;
     };
+    
+    const unfilteredSitemap = fs.readFileSync(`.data/${index}/sitemap.[i].xml`);
     
       // extra validation for projects: exclude anon and newly-created projects
       if (index === 'projects' &&  await !isProjectValid(item)) {

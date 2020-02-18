@@ -122,15 +122,15 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
       return atleastOneAuthedUser;
     };
     
-//       // extra validation for projects: exclude anon and newly-created projects
-//       if (index === 'projects' &&  await !isProjectValid(item)) {
-//         return null;
-//       }
+      // extra validation for projects: exclude anon and newly-created projects
+      if (index === 'projects' &&  await !isProjectValid(item)) {
+        return null;
+      }
       
-//       // remove pages with a noindex tag: any users/teams/collections that are empty
-//       if (index !== 'projects' && await isPageEmpty(item)) {
-//         return null;
-//       }
+      // remove pages with a noindex tag: any users/teams/collections that are empty
+      if (index !== 'projects' && await isPageEmpty(item)) {
+        return null;
+      }
     
       }
 }

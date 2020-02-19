@@ -8,7 +8,7 @@ const indices = require('./constants').INDICES;
 const glitchDomain = 'https://glitch.com';
 
 const args = process.argv.slice(2) || indices;
-args.length ? generate(args).then(filter(args)) : generate().then(filter());
+args.length ? generate(args) : generate();
 
 async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));

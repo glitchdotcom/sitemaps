@@ -94,7 +94,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
   }
 }
 
-async function filter() {
+async function filter(index) {
   console.log('Filtering...');
   
     /*
@@ -111,7 +111,7 @@ async function filter() {
         return atleastOneAuthedUser;
       };
       if (index === 'projects' && !isProjectValid(item)) {
-        return null;
+        // remove that url from map
       }
       
       // also need to exclude user pages with no projects

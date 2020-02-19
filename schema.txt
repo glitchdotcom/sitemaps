@@ -1,5 +1,7 @@
-{"team item":
-{ url: "prac",
+// examples of the items returned from Algolia
+
+team item:
+{ url: 'prac',
   name: 'Prac',
   isVerified: false,
   coverColor: '',
@@ -11,7 +13,7 @@
   collections: [],
   projects: [],
   updatedAt: 1570195139565,
-  objectID: 'team-6647' }}
+  objectID: 'team-6647' }
 
 user item:
 { name: 'Andromeda Bot creator',

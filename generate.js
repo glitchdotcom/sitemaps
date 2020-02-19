@@ -8,8 +8,7 @@ const indices = require('./constants').INDICES;
 const glitchDomain = 'https://glitch.com';
 
 const args = process.argv.slice(2) || indices;
-args.length ? generate(args) : generate();
-args.length ? filter(args) : filter();
+args.length ? generate(args).then(filter(args)) : generate().then(filter());
 
 async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
@@ -66,29 +65,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         }
       }
       
-      // exclude teams/collections with no projects on them
+      // exclude teams/collections with no projects in them
       if ((index === 'teams' || index === 'collections') && item.projects.length === 0) {
         return null;
       }
-
-      // exclude anon projects
-      // const isProjectValid = (project) => {
-      //   // must have at least one authed user to be included
-      //   let atleastOneAuthedUser = false;
-      //   let i = 0;
-      //   while (!atleastOneAuthedUser && i < project.members.length) {
-      //     const login = api.getUserLoginById(project.members[i]);
-      //     atleastOneAuthedUser = login != null ? true : false;
-      //     i++;
-      //   }
-      //   return atleastOneAuthedUser;
-      // };
-      // if (index === 'projects' && !isProjectValid(item)) {
-      //   return null;
-      // }
-      
-      // also need to exclude user pages with no projects
-      // use api.isEmptyUserPage(page.login)
 
       return {
         loc,
@@ -107,6 +87,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
+      return;
     } catch (error) {
       spinner.fail(`${index}: ${error.toString()}`);
     }
@@ -117,5 +98,25 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
   console.log('Filtering...');
   for (let index of sections) {
     console.log("filtered" + index);
+    /*
+      // exclude anon projects
+      const isProjectValid = (project) => {
+        // must have at least one authed user to be included
+        let atleastOneAuthedUser = false;
+        let i = 0;
+        while (!atleastOneAuthedUser && i < project.members.length) {
+          const login = api.getUserLoginById(project.members[i]);
+          atleastOneAuthedUser = login != null ? true : false;
+          i++;
+        }
+        return atleastOneAuthedUser;
+      };
+      if (index === 'projects' && !isProjectValid(item)) {
+        return null;
+      }
+      
+      // also need to exclude user pages with no projects
+      // use api.isEmptyUserPage(page.login)
+    */
   }
 }

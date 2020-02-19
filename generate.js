@@ -2,7 +2,7 @@ const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const getUserById = require('./api').getUserLoginById;
+const api = require('./api');
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -52,7 +52,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       let atleastOneAuthedUser = false;
       let i = 0;
       while (!atleastOneAuthedUser && i < project.members.length) {
-        const login = getUserById(project.members[i]);
+        const login = api.getUserLoginById(project.members[i]);
         atleastOneAuthedUser = login != null ? true : false;
         i++;
       }
@@ -75,11 +75,19 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
+      
+      // exclude teams/collections with no projects on them
+      if ((index === 'teams' || index === 'collections') && item.projects.length === 0) {
+        return null;
+      }
 
       // extra validation for projects: exclude anon and newly-created projects
       // if (index === 'projects' && !isProjectValid(item)) {
       //   return null;
       // }
+      
+      // also need to exclude user pages with no projects
+      // use api.isEmptyUserPage(page.login)
 
       return {
         loc,

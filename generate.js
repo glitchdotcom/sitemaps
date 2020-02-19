@@ -87,17 +87,16 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
-      return;
+      filter(index);
     } catch (error) {
       spinner.fail(`${index}: ${error.toString()}`);
     }
   }
 }
 
-async function filter(sections = ['projects', 'users', 'teams', 'collections']) {
+async function filter() {
   console.log('Filtering...');
-  for (let index of sections) {
-    console.log("filtered" + index);
+  
     /*
       // exclude anon projects
       const isProjectValid = (project) => {
@@ -118,5 +117,4 @@ async function filter(sections = ['projects', 'users', 'teams', 'collections']) 
       // also need to exclude user pages with no projects
       // use api.isEmptyUserPage(page.login)
     */
-  }
 }

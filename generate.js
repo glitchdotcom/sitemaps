@@ -9,6 +9,7 @@ const glitchDomain = 'https://glitch.com';
 
 const args = process.argv.slice(2) || indices;
 args.length ? generate(args) : generate();
+args.length ? filter(args) : filter();
 
 async function generate(sections = ['projects', 'users', 'teams', 'collections']) {
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
@@ -109,5 +110,12 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     } catch (error) {
       spinner.fail(`${index}: ${error.toString()}`);
     }
+  }
+}
+
+async function filter(sections = ['projects', 'users', 'teams', 'collections']) {
+  console.log('Filtering...');
+  for (let index of sections) {
+    console.log("filtered" + index);
   }
 }

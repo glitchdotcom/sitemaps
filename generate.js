@@ -40,14 +40,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
     };
 
     const isProjectValid = (project) => {
-      // exclude projects created within the last 24 hours
-      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
-      const elapsed = Date.now() - Date.UTC(project.createdAt);
-      const oneDay = 1000 * 60 * 60 * 24;
-      if (elapsed < oneDay) {
-        return false;
-      }
-
       // exclude projects made by anons, must have at least one authed user to be included
       let atleastOneAuthedUser = false;
       let i = 0;
@@ -69,11 +61,20 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
       // see discussion https://www.notion.so/glitch/Sitemaps-36446db005414f87af9910c51e21d88e#1a0eff53ae9c492aa9be33ceac1126b8
       const priority = 0.6;
-      console.log(item)
 
       // exclude private or not safe for kids items
       if (item.notSafeForKids || item.isPrivate) {
         return null;
+      }
+      
+      // exclude projects created within the last 24 hours
+      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
+      if (index === 'projects') {
+        const elapsed = Date.now() - Date.UTC(item.createdAt);
+        const oneDay = 1000 * 60 * 60 * 24;
+        if (elapsed < oneDay) {
+          return false;
+        }
       }
       
       // exclude teams/collections with no projects on them
@@ -81,7 +82,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         return null;
       }
 
-      // extra validation for projects: exclude anon and newly-created projects
+      // exclude anon projects
       // if (index === 'projects' && !isProjectValid(item)) {
       //   return null;
       // }

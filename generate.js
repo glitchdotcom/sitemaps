@@ -105,39 +105,49 @@ async function filter(index) {
   spinner.color = 'blue';
   
   const directoryPath = path.join(__dirname, `.data/${index}`);
-  
-  fs.readdir(directoryPath, async function (err, files) {
-    files.forEach(async function (file) {
-      if (file.includes('index')) {
-        // don't need to worry about the sitemap-index.xml files
-        return null;
-      }
-      const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
-      const sitemap = new xmlSitemap(sitemapAsString);
+  try{
+    fs.readdir(directoryPath, async function (err, files) {
+      files.forEach(async function (file) {
+        if (file.includes('index')) {
+          // don't need to worry about the sitemap-index.xml files
+          return null;
+        }
+        const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
+        const sitemap = new xmlSitemap(sitemapAsString);
 
-      if (index === 'users') {
-        for (const url of sitemap.urls) {
-          const justTheLogin = url.split('@')[1]; // saved as 
-          const isEmpty = await api.isEmptyUserPage(justTheLogin);
-          if (isEmpty) {
-            sitemap.remove(url)
+        if (index === 'users') {
+          for (const url of sitemap.urls) {
+            const justTheLogin = url.split('@')[1]; // saved as full url, just want username
+            const isEmpty = await api.isEmptyUserPage(justTheLogin);
+            if (isEmpty) {
+              sitemap.remove(url);
+            }
           }
         }
-      }
-      if (index === 'projects') {
-
-      }
-      fs.writeFileSync(file, sitemap);
+        if (index === 'projects') {
+          for (const url of sitemap.urls) {
+            console.log(url)
+            //const justTheLogin = url.split('@')[1]; // saved as full url, just want username
+            //const isEmpty = await api.isEmptyUserPage(justTheLogin);
+            //if (isEmpty) {
+            //  sitemap.remove(url);
+            //}
+          }
+        }
+        fs.writeFileSync(file, sitemap);
+      });
       spinner.succeed();
     });
-      // 
-  });
+  } catch (error) {
+    spinner.fail(`${index}: ${error.toString()}`);
+  }
 };
   
     /*
       // exclude anon projects
       const isProjectValid = (project) => {
         // must have at least one authed user to be included
+        // NOTE: need to use https://api.glitch.com/v1/projects/by/domain/users to go from project url to list of users, can check logins directly from there
         let atleastOneAuthedUser = false;
         let i = 0;
         while (!atleastOneAuthedUser && i < project.members.length) {

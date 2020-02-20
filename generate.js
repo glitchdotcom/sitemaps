@@ -118,11 +118,13 @@ async function filter(index) {
         const sitemap = new xmlSitemap(sitemapAsString);
         
         if(index === 'users') {
-          for () {
+          sitemap.urls.forEach(page => async function (page) {
             await api.isEmptyUserPage(page.login);
+          })
+            
           }
         }
-        fs.writeFileSync(file, sitemap)
+        // fs.writeFileSync(file, sitemap)
       });
     });
   

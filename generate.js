@@ -112,7 +112,7 @@ async function filter(index) {
         // don't need to worry about the sitemap-index.xml files
         return null;
       }
-      const sitemapAsString = fs.readFile(`${directoryPath}/${file}`);
+      const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
       const sitemap = new xmlSitemap(sitemapAsString);
 
       if (index === 'users') {
@@ -127,7 +127,7 @@ async function filter(index) {
       if (index === 'projects') {
 
       }
-      fs.writeFile(file, sitemap);
+      fs.writeFileSync(file, sitemap);
       spinner.succeed();
     });
       // 

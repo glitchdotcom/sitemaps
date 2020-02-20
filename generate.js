@@ -123,10 +123,11 @@ async function filter(index) {
           })
             
           }
-        }
+
+        });
         // fs.writeFileSync(file, sitemap)
       });
-    });
+};
   
     /*
       // exclude anon projects

@@ -101,32 +101,37 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
 async function filter(index) {
   console.log('Filtering...');
+  
   const directoryPath = path.join(__dirname, `.data/${index}`);
-    fs.readdir(directoryPath, async function (err, files) {
-      if (err) {
-        return console.log('Unable to scan directory: ' + err);
-      } 
-      files.forEach(async function (file) {
-        if (file.includes('index')) {
-          // don't need to worry about the sitemap-index.xml files
-          return null;
-        }
-        console.log(file);
-        const sitemapAsString = fs.readFileSync(path.join(__dirname, `.data/${index}/${file}`));
-        const sitemap = new xmlSitemap(sitemapAsString);
-        
-        if(index === 'users') {
-          console.log(sitemap)
-          sitemap.urls.forEach(page => async function (page) {
-            console.log(page.split('@')[1])
-            //await api.isEmptyUserPage(page.login);
-          })
-            
-          }
+  
+  fs.readdir(directoryPath, async function (err, files) {
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    } 
+    files.forEach(async function (file) {
+      if (file.includes('index')) {
+        // don't need to worry about the sitemap-index.xml files
+        return null;
+      }
+      const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
+      const sitemap = new xmlSitemap(sitemapAsString);
 
-        });
-        // fs.writeFileSync(file, sitemap)
-      });
+      if (index === 'users') {
+        for (const url of sitemap.urls) {
+          const justTheLogin = url.split('@')[1]; // saved as 
+          const isEmpty = await api.isEmptyUserPage(justTheLogin);
+          if (isEmpty) {
+            sitemap.remove(url)
+          }
+        }
+      }
+      if (index === 'projects') {
+
+      }
+      fs.writeFileSync(file, sitemap);
+    });
+      // 
+  });
 };
   
     /*

@@ -15,6 +15,7 @@ module.exports.isEmptyUserPage = async function(login) {
     const res = await axios.get(`https://api.glitch.com/v1/users/by/login/projects?limit=1&login=${safeLogin}`)
     return res.data.items.length === 0;
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
+    return true;
   }
 }

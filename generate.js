@@ -17,7 +17,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
 
   for (let index of sections) {
-    const spinner = ora(chalk.bold(index)).start();
+    const spinner = ora(chalk.bold(`Generating ${index}...`)).start();
     spinner.color = 'blue';
 
     let locTemplate;
@@ -91,6 +91,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       });
       spinner.succeed();
       if (index === 'users' || index === 'projects') {
+        //we've done all the filtering we need to for teams and collections
         filter(index);
       }
     } catch (error) {
@@ -100,20 +101,18 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 }
 
 async function filter(index) {
-  console.log('Filtering...');
+  const spinner = ora(chalk.bold(`Filtering ${index}...`)).start();
+  spinner.color = 'blue';
   
   const directoryPath = path.join(__dirname, `.data/${index}`);
   
   fs.readdir(directoryPath, async function (err, files) {
-    if (err) {
-      return console.log('Unable to scan directory: ' + err);
-    } 
     files.forEach(async function (file) {
       if (file.includes('index')) {
         // don't need to worry about the sitemap-index.xml files
         return null;
       }
-      const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
+      const sitemapAsString = fs.readFile(`${directoryPath}/${file}`);
       const sitemap = new xmlSitemap(sitemapAsString);
 
       if (index === 'users') {
@@ -128,7 +127,8 @@ async function filter(index) {
       if (index === 'projects') {
 
       }
-      fs.writeFileSync(file, sitemap);
+      fs.writeFile(file, sitemap);
+      spinner.succeed();
     });
       // 
   });
@@ -151,6 +151,4 @@ async function filter(index) {
         // remove that url from map
       }
       
-      // also need to exclude user pages with no projects
-      // use api.isEmptyUserPage(page.login)
     */

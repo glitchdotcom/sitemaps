@@ -112,12 +112,13 @@ async function filter(index) {
           return null;
         }
         console.log(file);
-        const sitemapAsString = fs.readFileSync(`/app/.data/${index}/${file}`);
+        const sitemapAsString = fs.readFileSync(path.join(__dirname, `.data/${index}/${file}`));
         const sitemap = new xmlSitemap(sitemapAsString);
         
         if(index === 'users') {
+          console.log(sitemap)
           sitemap.urls.forEach(page => async function (page) {
-            console.log(page)
+            console.log(page.split('@')[1])
             //await api.isEmptyUserPage(page.login);
           })
             

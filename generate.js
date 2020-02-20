@@ -126,8 +126,8 @@ async function filter(index) {
         }
         if (index === 'projects') {
           for (const url of sitemap.urls) {
-            console.log(url)
-            //const justTheLogin = url.split('@')[1]; // saved as full url, just want username
+            const justTheProjectName = url.split('~')[1]; // saved as full url, just want name
+            const isAnon = await api.
             //const isEmpty = await api.isEmptyUserPage(justTheLogin);
             //if (isEmpty) {
             //  sitemap.remove(url);

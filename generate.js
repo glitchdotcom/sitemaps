@@ -90,7 +90,9 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
-      filter(index);
+      if (index === 'users' || index === 'projects') {
+        filter(index);
+      }
     } catch (error) {
       spinner.fail(`${index}: ${error.toString()}`);
     }
@@ -99,10 +101,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
 async function filter(index) {
   console.log('Filtering...');
-  if (index === 'teams' || index === 'collections') {
-    // we've already accomplished the necessary filtering here
-    return;
-  }
   const directoryPath = path.join(__dirname, `.data/${index}`);
     fs.readdir(directoryPath, async function (err, files) {
       if (err) {
@@ -114,12 +112,13 @@ async function filter(index) {
           return null;
         }
         console.log(file);
-        const sitemapAsString = fs.readFileSync(file);
+        const sitemapAsString = fs.readFileSync(`/app/.data/${index}/${file}`);
         const sitemap = new xmlSitemap(sitemapAsString);
         
         if(index === 'users') {
           sitemap.urls.forEach(page => async function (page) {
-            await api.isEmptyUserPage(page.login);
+            console.log(page)
+            //await api.isEmptyUserPage(page.login);
           })
             
           }
@@ -149,4 +148,3 @@ async function filter(index) {
       // also need to exclude user pages with no projects
       // use api.isEmptyUserPage(page.login)
     */
-}

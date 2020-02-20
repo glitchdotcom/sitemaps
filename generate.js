@@ -104,11 +104,11 @@ async function filter(index) {
     return;
   }
   const directoryPath = path.join(__dirname, `.data/${index}`);
-    fs.readdir(directoryPath, function (err, files) {
+    fs.readdir(directoryPath, async function (err, files) {
       if (err) {
         return console.log('Unable to scan directory: ' + err);
       } 
-      files.forEach(function (file) {
+      files.forEach(async function (file) {
         if (file.includes('index')) {
           // don't need to worry about the sitemap-index.xml files
           return null;
@@ -118,8 +118,11 @@ async function filter(index) {
         const sitemap = new xmlSitemap(sitemapAsString);
         
         if(index === 'users') {
-          
+          for () {
+            await api.isEmptyUserPage(page.login);
+          }
         }
+        fs.writeFileSync(file, sitemap)
       });
     });
   

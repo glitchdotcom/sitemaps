@@ -127,11 +127,10 @@ async function filter(index) {
         if (index === 'projects') {
           for (const url of sitemap.urls) {
             const justTheProjectName = url.split('~')[1]; // saved as full url, just want name
-            const isAnon = await api.
-            //const isEmpty = await api.isEmptyUserPage(justTheLogin);
-            //if (isEmpty) {
-            //  sitemap.remove(url);
-            //}
+            const isAnon = await api.isAnonProjects(justTheProjectName);
+            if (isAnon) {
+             sitemap.remove(url);
+            }
           }
         }
         fs.writeFileSync(file, sitemap);
@@ -142,23 +141,3 @@ async function filter(index) {
     spinner.fail(`${index}: ${error.toString()}`);
   }
 };
-  
-    /*
-      // exclude anon projects
-      const isProjectValid = (project) => {
-        // must have at least one authed user to be included
-        // NOTE: need to use https://api.glitch.com/v1/projects/by/domain/users to go from project url to list of users, can check logins directly from there
-        let atleastOneAuthedUser = false;
-        let i = 0;
-        while (!atleastOneAuthedUser && i < project.members.length) {
-          const login = api.getUserLoginById(project.members[i]);
-          atleastOneAuthedUser = login != null ? true : false;
-          i++;
-        }
-        return atleastOneAuthedUser;
-      };
-      if (index === 'projects' && !isProjectValid(item)) {
-        // remove that url from map
-      }
-      
-    */

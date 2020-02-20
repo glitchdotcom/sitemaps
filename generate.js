@@ -99,6 +99,10 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
 async function filter(index) {
   console.log('Filtering...');
+  if (index === 'teams' || index === 'collections') {
+    // we've already accomplished the necessary filtering here
+    return;
+  }
   const directoryPath = path.join(__dirname, `.data/${index}`);
     fs.readdir(directoryPath, function (err, files) {
       if (err) {
@@ -106,9 +110,16 @@ async function filter(index) {
       } 
       files.forEach(function (file) {
         if (file.includes('index')) {
+          // don't need to worry about the sitemap-index.xml files
           return null;
         }
-        console.log(file); 
+        console.log(file);
+        const sitemapAsString = fs.readFileSync(file);
+        const sitemap = new xmlSitemap(sitemapAsString);
+        
+        if(index === 'users') {
+          
+        }
       });
     });
   

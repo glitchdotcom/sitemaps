@@ -6,6 +6,7 @@ const indices = require('./constants').INDICES;
 const xmlSitemap = require('xml-sitemap');
 const fs = require('fs');
 
+
 const glitchDomain = 'https://glitch.com';
 
 const args = process.argv.slice(2) || indices;

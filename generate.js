@@ -1,6 +1,9 @@
 const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
+const xmlSitemap = require('xml-sitemap');
+const fs = require('fs');
+const path = require('path');
 
 const api = require('./api');
 const indices = require('./constants').INDICES;
@@ -96,6 +99,19 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
 
 async function filter(index) {
   console.log('Filtering...');
+  const directoryPath = path.join(__dirname, `.data/${index}`);
+    //passsing directoryPath and callback function
+    fs.readdir(directoryPath, function (err, files) {
+        //handling error
+        if (err) {
+            return console.log('Unable to scan directory: ' + err);
+        } 
+        //listing all files using forEach
+        files.forEach(function (file) {
+            // Do whatever you want to do with the file
+            console.log(file); 
+        });
+    });
   
     /*
       // exclude anon projects

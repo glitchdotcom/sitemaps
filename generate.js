@@ -1,8 +1,11 @@
 const algoliaSitemap = require('algolia-sitemap');
 const chalk = require('chalk');
 const ora = require('ora');
+const xmlSitemap = require('xml-sitemap');
+const fs = require('fs');
+const path = require('path');
 
-const getUserById = require('./api').getUserById;
+const api = require('./api');
 const indices = require('./constants').INDICES;
 
 const glitchDomain = 'https://glitch.com';
@@ -14,7 +17,7 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
   console.log(chalk.blue.bold(`Generating sitemaps for ${sections.join(', ')}\n`));
 
   for (let index of sections) {
-    const spinner = ora(chalk.bold(index)).start();
+    const spinner = ora(chalk.bold(`Generating ${index}...`)).start();
     spinner.color = 'blue';
 
     let locTemplate;
@@ -39,26 +42,6 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       indexName: indices[index],
     };
 
-    const isProjectValid = (project) => {
-      // exclude projects created within the last 24 hours
-      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
-      const elapsed = Date.now() - Date.UTC(project.createdAt);
-      const oneDay = 1000 * 60 * 60 * 24;
-      if (elapsed < oneDay) {
-        return false;
-      }
-
-      // exclude projects made by anons, must have at least one authed user to be included
-      let atleastOneAuthedUser = false;
-      let i = 0;
-      while (!atleastOneAuthedUser && i < project.members.length) {
-        const user = getUserById(project.members[0]);
-        atleastOneAuthedUser = user.login ? true : false;
-        i++;
-      }
-      return atleastOneAuthedUser;
-    };
-
     const hitToParams = (item) => {
       // get template for formatting the full URL
       const loc = locTemplate(item);
@@ -74,9 +57,19 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
       if (item.notSafeForKids || item.isPrivate) {
         return null;
       }
-
-      // extra validation for projects: exclude anon and newly-created projects
-      if (index === 'projects' && !isProjectValid(item)) {
+      
+      // exclude projects created within the last 24 hours
+      // this gives us a window to catch egregiously bad projects before tacitly endorsing them via sitemap
+      if (index === 'projects') {
+        const elapsed = Date.now() - Date.UTC(item.createdAt);
+        const oneDay = 1000 * 60 * 60 * 24;
+        if (elapsed < oneDay) {
+          return false;
+        }
+      }
+      
+      // exclude teams/collections with no projects in them
+      if ((index === 'teams' || index === 'collections') && item.projects.length === 0) {
         return null;
       }
 
@@ -97,9 +90,54 @@ async function generate(sections = ['projects', 'users', 'teams', 'collections']
         hitToParams,
       });
       spinner.succeed();
+      if (index === 'users' || index === 'projects') {
+        //we've done all the filtering we need to for teams and collections
+        filter(index);
+      }
     } catch (error) {
       spinner.fail(`${index}: ${error.toString()}`);
     }
   }
-  console.log('\nGenerated sitemaps are in the .data directory');
 }
+
+async function filter(index) {
+  const spinner = ora(chalk.bold(`Filtering ${index}...`)).start();
+  spinner.color = 'blue';
+  
+  const directoryPath = path.join(__dirname, `.data/${index}`);
+  try{
+    fs.readdir(directoryPath, async function (err, files) {
+      files.forEach(async function (file) {
+        if (file.includes('index')) {
+          // don't need to worry about the sitemap-index.xml files
+          return null;
+        }
+        const sitemapAsString = fs.readFileSync(`${directoryPath}/${file}`);
+        const sitemap = new xmlSitemap(sitemapAsString);
+
+        if (index === 'users') {
+          for (const url of sitemap.urls) {
+            const justTheLogin = url.split('@')[1]; // saved as full url, just want username
+            const isEmpty = await api.isEmptyUserPage(justTheLogin);
+            if (isEmpty) {
+              sitemap.remove(url);
+            }
+          }
+        }
+        if (index === 'projects') {
+          for (const url of sitemap.urls) {
+            const justTheProjectName = url.split('~')[1]; // saved as full url, just want name
+            const isAnon = await api.isAnonProjects(justTheProjectName);
+            if (isAnon) {
+             sitemap.remove(url);
+            }
+          }
+        }
+        fs.writeFileSync(file, sitemap);
+      });
+      spinner.succeed();
+    });
+  } catch (error) {
+    spinner.fail(`${index}: ${error.toString()}`);
+  }
+};

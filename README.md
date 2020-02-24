@@ -31,4 +31,4 @@ There are some entities we don't want to index, however, so we've added addition
 The final two filters are not able to be determined by the response from Algolia (you can see example responses of all types in `schema.txt`) and currently require an API call to get the information needed to determine them.
 The package we use to query this data from Algolia does not work with the async nature of our API, so filtering based on API call has to be done separately.
 The `filter` function, which is called after `generate`, takes each sitemap shard, loads it as a Sitemap object, and loops through the URLs in the map.
-For each URL, it checks whether the page should be filtered out, and if so, removes it from the 
+For each URL, it checks whether the page should be filtered out, and if so, removes it from the object. Once complete, it writes to the same location the file was in previously.

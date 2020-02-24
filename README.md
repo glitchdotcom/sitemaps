@@ -1,7 +1,7 @@
 # Sitemaps generator for glitch.com
 
 To Use
-===
+---
 
 Open the console and run `npm run generate` to rebuild the sitemaps:
 
@@ -17,6 +17,6 @@ Generated sitemaps are written to `.data` and served from `/projects`, `/teams`,
 ⏱ *Note: Generating the projects sitemaps takes a few minutes*
 
 What's Happening
-===
+---
 
-The `generate` script looks at all the pages indexed by Algolia, and 
+The `generate` script looks at all the pages indexed by Algolia, and loops through them to create a map of the sites on glitch.com.

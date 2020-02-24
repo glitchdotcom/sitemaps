@@ -20,3 +20,6 @@ What's Happening
 ---
 
 The `generate` script looks at all the pages indexed by Algolia, and loops through them to create a map of the sites on glitch.com.
+There are some entities we don't want to index, however, so we've added additional filtering to cut the following pages out:
+-  private projects
+-  projects 
